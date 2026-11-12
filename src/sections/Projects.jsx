@@ -1,13 +1,37 @@
+import { useMemo, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import { GithubIcon } from '../components/BrandIcons'
 import { projects } from '../data/portfolio'
+
+const filters = [
+  { id: 'all', label: 'All' },
+  { id: 'vanilla', label: 'HTML · CSS · JS' },
+  { id: 'react', label: 'React' },
+]
 
 function getDomain(url) {
   return url.replace(/^https?:\/\//, '')
 }
 
 export default function Projects() {
+  const [filter, setFilter] = useState('all')
+
+  const visible = useMemo(
+    () =>
+      filter === 'all'
+        ? projects
+        : projects.filter((project) => project.tag === filter),
+    [filter],
+  )
+
+  const handleSpotlight = (event) => {
+    const card = event.currentTarget
+    const rect = card.getBoundingClientRect()
+    card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+    card.style.setProperty('--my', `${event.clientY - rect.top}px`)
+  }
+
   return (
     <section id="projects" className="section projects">
       <div className="container">
@@ -20,12 +44,27 @@ export default function Projects() {
           </p>
         </Reveal>
 
-        <div className="projects-grid">
-          {projects.map((project, index) => (
-            <Reveal key={project.title} delay={index * 0.08}>
+        <Reveal className="project-filters" delay={0.05}>
+          {filters.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`project-filter${filter === item.id ? ' active' : ''}`}
+              onClick={() => setFilter(item.id)}
+              aria-pressed={filter === item.id}
+            >
+              {item.label}
+            </button>
+          ))}
+        </Reveal>
+
+        <div className="projects-grid" key={filter}>
+          {visible.map((project, index) => (
+            <Reveal key={project.title} delay={index * 0.06}>
               <article
                 className="project-card"
-                style={{ '--project-accent': project.accent }}
+                style={{ '--project-accent': project.accent, '--i': index }}
+                onMouseMove={handleSpotlight}
               >
                 <a
                   className="project-preview"

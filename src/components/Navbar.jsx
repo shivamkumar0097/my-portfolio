@@ -5,7 +5,26 @@ import { navLinks } from '../data/portfolio'
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
+  const [progress, setProgress] = useState(0)
+  const [scrolled, setScrolled] = useState(false)
   const close = () => setOpen(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollTop = window.scrollY
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(scrollable > 0 ? Math.min(scrollTop / scrollable, 1) : 0)
+      setScrolled(scrollTop > 24)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
 
   useEffect(() => {
     const ids = ['home', ...navLinks.map((link) => link.href.slice(1))]
@@ -26,10 +45,32 @@ export default function Navbar() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 960) setOpen(false)
+    }
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   const isActive = (href) => active === href.slice(1)
 
   return (
-    <header className="nav">
+    <header className={`nav${scrolled ? ' nav-scrolled' : ''}`}>
       <div className="container nav-inner">
         <a href="#home" className="brand" onClick={close}>
           <span className="brand-mark">&lt;/&gt;</span> shivam
@@ -80,6 +121,12 @@ export default function Navbar() {
           </a>
         </div>
       )}
+
+      <span
+        className="nav-progress"
+        style={{ transform: `scaleX(${progress})` }}
+        aria-hidden="true"
+      />
     </header>
   )
 }

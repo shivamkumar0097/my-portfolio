@@ -1,12 +1,22 @@
 import {
   ArrowUpRight,
+  Code2,
   GraduationCap,
+  LayoutTemplate,
   Mail,
   MapPin,
   Sparkles,
+  Wrench,
 } from 'lucide-react'
 import Reveal from '../components/Reveal'
-import { profile } from '../data/portfolio'
+import { profile, services } from '../data/portfolio'
+
+const serviceIcons = {
+  layout: LayoutTemplate,
+  code: Code2,
+  react: Sparkles,
+  tool: Wrench,
+}
 
 const facts = [
   {
@@ -82,6 +92,34 @@ export default function About() {
             })}
           </Reveal>
         </div>
+
+        <Reveal className="services" delay={0.1}>
+          <div className="services-head">
+            <h3 className="services-title">What I can do for you</h3>
+            <span className="services-sub">
+              Pick a direction and I&apos;ll take it from there.
+            </span>
+          </div>
+
+          <div className="services-grid">
+            {services.map(({ icon, title, text }) => {
+              const Icon = serviceIcons[icon]
+
+              return (
+                <article key={title} className="service-card">
+                  <span className="service-icon">
+                    <Icon size={18} />
+                  </span>
+                  <h4 className="service-title">{title}</h4>
+                  <p className="service-text">{text}</p>
+                  <span className="service-arrow">
+                    <ArrowUpRight size={15} />
+                  </span>
+                </article>
+              )
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   )

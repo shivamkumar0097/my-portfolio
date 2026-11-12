@@ -1,4 +1,4 @@
-import { BookOpen, CalendarDays, GraduationCap } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, GraduationCap } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import { education, learning } from '../data/portfolio'
 
@@ -18,6 +18,7 @@ export default function Education() {
           {education.map((item) => (
             <Reveal key={item.degree} delay={0.05}>
               <article className="edu-card">
+                <span className="edu-marker" aria-hidden="true" />
                 <div className="edu-top">
                   <span className="edu-icon">
                     <GraduationCap size={24} />
@@ -37,12 +38,17 @@ export default function Education() {
           <Reveal delay={0.15}>
             <article className="learning-card">
               <h3 className="learning-title">
-                <BookOpen size={18} /> Currently learning
+                <span className="learning-icon">
+                  <BookOpen size={18} />
+                </span>
+                Currently learning
               </h3>
               <ul className="learning-list">
                 {learning.map((topic) => (
                   <li key={topic}>
-                    <span className="learning-dot" aria-hidden="true" />
+                    <span className="learning-check">
+                      <Check size={13} />
+                    </span>
                     {topic}
                   </li>
                 ))}

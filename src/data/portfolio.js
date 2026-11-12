@@ -15,10 +15,33 @@ export const profile = {
 }
 
 export const skills = [
-  { name: 'HTML', label: 'Semantic Markup', color: '#e34f26', icon: 'html' },
-  { name: 'CSS', label: 'Modern Styling', color: '#2965f1', icon: 'css' },
-  { name: 'JavaScript', label: 'Core Logic', color: '#f7df1e', icon: 'js' },
-  { name: 'React', label: 'UI Library', color: '#61dafb', icon: 'react' },
+  { name: 'HTML', label: 'Semantic Markup', color: '#e34f26', icon: 'html', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML', level: 95 },
+  { name: 'CSS', label: 'Modern Styling', color: '#2965f1', icon: 'css', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS', level: 90 },
+  { name: 'JavaScript', label: 'Core Logic', color: '#f7df1e', icon: 'js', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript', level: 82 },
+  { name: 'React', label: 'UI Library', color: '#61dafb', icon: 'react', url: 'https://react.dev', level: 72 },
+]
+
+export const services = [
+  {
+    icon: 'layout',
+    title: 'Landing Pages',
+    text: 'Single-page sites that look premium and convert visitors into leads.',
+  },
+  {
+    icon: 'code',
+    title: 'Full Websites',
+    text: 'Multi-page, fully responsive websites built from scratch with clean structure.',
+  },
+  {
+    icon: 'react',
+    title: 'React Interfaces',
+    text: 'Component-based UIs with state, effects and real API integration.',
+  },
+  {
+    icon: 'tool',
+    title: 'Fixes & Polish',
+    text: 'Responsive bugs, layout glitches, animation and performance cleanups.',
+  },
 ]
 
 export const projects = [
@@ -27,6 +50,7 @@ export const projects = [
     description:
       'A real-time weather app that shows current conditions and a clean, responsive forecast UI for any city.',
     stack: ['HTML', 'CSS', 'JavaScript'],
+    tag: 'vanilla',
     live: 'https://today-weathercheck.netlify.app',
     source: null,
     accent: '#61dafb',
@@ -36,6 +60,7 @@ export const projects = [
     description:
       'A movie discovery app where you can search any movie and instantly browse posters, titles and details.',
     stack: ['React', 'JavaScript', 'CSS'],
+    tag: 'react',
     live: 'https://search-any-moviee.netlify.app',
     source: null,
     accent: '#818cf8',
@@ -45,6 +70,7 @@ export const projects = [
     description:
       'A modern car showcase website with a clean layout, smooth sections and a responsive browsing experience.',
     stack: ['HTML', 'CSS', 'JavaScript'],
+    tag: 'vanilla',
     live: 'https://webcarofficial.netlify.app',
     source: null,
     accent: '#5eead4',
@@ -67,6 +93,12 @@ export const learning = [
   'Responsive layouts with modern CSS',
   'Fetching data from APIs and handling it cleanly',
   'Writing cleaner, more maintainable code',
+]
+
+export const stats = [
+  { value: '3+', label: 'Projects shipped' },
+  { value: '4', label: 'Core technologies' },
+  { value: '100%', label: 'Responsive builds' },
 ]
 
 export const navLinks = [

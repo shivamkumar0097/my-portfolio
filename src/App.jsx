@@ -1,5 +1,7 @@
+import { MotionConfig } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import BackToTop from './components/BackToTop'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
@@ -10,7 +12,7 @@ import './App.css'
 
 function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Navbar />
       <main>
         <Hero />
@@ -21,7 +23,8 @@ function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+      <BackToTop />
+    </MotionConfig>
   )
 }
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Code2, Mail, MapPin } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowRight, Code2, Mail, MapPin, Sparkles } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '../components/BrandIcons'
-import { profile } from '../data/portfolio'
+import { profile, stats } from '../data/portfolio'
 
 const roles = ['Frontend Developer', 'React Developer', 'BCA Student']
 
@@ -24,8 +24,11 @@ function Hero() {
   const [text, setText] = useState('')
   const [roleIndex, setRoleIndex] = useState(0)
   const [deleting, setDeleting] = useState(false)
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
+    if (reduceMotion) return
+
     const current = roles[roleIndex]
     let delay = deleting ? 45 : 90
 
@@ -50,7 +53,9 @@ function Hero() {
     }, delay)
 
     return () => clearTimeout(timer)
-  }, [text, deleting, roleIndex])
+  }, [text, deleting, roleIndex, reduceMotion])
+
+  const displayText = reduceMotion ? roles[roleIndex] : text
 
   return (
     <section id="home" className="hero">
@@ -73,7 +78,7 @@ function Hero() {
           </motion.h1>
 
           <motion.div variants={item} className="hero-role" aria-live="polite">
-            <span className="role-text">{text}</span>
+            <span className="role-text">{displayText}</span>
             <span className="caret" aria-hidden="true" />
           </motion.div>
 
@@ -82,12 +87,22 @@ function Hero() {
           </motion.p>
 
           <motion.div variants={item} className="hero-actions">
-            <a href="#projects" className="btn btn-primary">
+            <a href="#projects" className="btn btn-primary btn-shimmer">
               View Projects <ArrowRight size={17} />
             </a>
             <a href="#contact" className="btn btn-ghost">
-              Let&apos;s talk
+              <Sparkles size={16} />
+              Hire me
             </a>
+          </motion.div>
+
+          <motion.div variants={item} className="hero-stats">
+            {stats.map((stat) => (
+              <div key={stat.label} className="hero-stat">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
           </motion.div>
 
           <motion.div variants={item} className="hero-meta">
@@ -129,10 +144,15 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="hero-photo-wrap">
+            <span className="hero-photo-ring" aria-hidden="true" />
             <div className="hero-photo">
               <img
                 src={profile.photo}
                 alt={`${profile.name} — ${profile.role}`}
+                width="756"
+                height="945"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
             <span className="photo-badge photo-badge-top">

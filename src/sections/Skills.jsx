@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import Reveal from '../components/Reveal'
 import { skillIcons } from '../components/skillIconMap'
 import { skills } from '../data/portfolio'
@@ -21,9 +22,13 @@ export default function Skills() {
 
             return (
               <Reveal key={skill.name} delay={index * 0.07}>
-                <article
+                <a
                   className="skill-card"
+                  href={skill.url}
+                  target="_blank"
+                  rel="noreferrer"
                   style={{ '--skill-color': skill.color }}
+                  aria-label={`${skill.name} official website`}
                 >
                   <span className="skill-icon">
                     <Icon />
@@ -31,9 +36,25 @@ export default function Skills() {
                   <span className="skill-body">
                     <h3 className="skill-name">{skill.name}</h3>
                     <p className="skill-label">{skill.label}</p>
+                    <span className="skill-meter-row">
+                      <span className="skill-meter">
+                        <motion.span
+                          className="skill-meter-fill"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true, margin: '-60px' }}
+                          transition={{
+                            duration: 1,
+                            delay: index * 0.07 + 0.25,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        />
+                      </span>
+                      <span className="skill-level">{skill.level}%</span>
+                    </span>
                   </span>
                   <span className="skill-index">0{index + 1}</span>
-                </article>
+                </a>
               </Reveal>
             )
           })}
